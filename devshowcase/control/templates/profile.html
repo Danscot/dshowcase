@@ -1,0 +1,434 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | DShowcase</title>
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="{%static 'favicon.ico' %}" type="image/x-icon">
+    <style>
+        .logo img {
+            height: 50px;
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 20px;
+        }
+
+       
+        .container{
+
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+        .center{
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            justify-content: center;
+            
+        }
+        .card {
+                max-width: 900px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                max-height: 300px;
+               
+             
+            }
+            .row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0;
+            }
+            .col-md-4, .col-md-8 {
+                padding: 0;
+            }
+            .col-md-4 {
+                flex: 0 0 auto;
+                width: 33.3333%;
+            }
+            .col-md-8 {
+                flex: 0 0 auto;
+                width: 66.6667%;
+            }
+           
+            .card-body {
+                padding: 15px;
+            }
+            .tech-stack {
+                margin-top: 10px;
+            }
+            .tech-stack ul {
+                list-style-type: none;
+                padding: 0;
+            }
+            .tech-stack li {
+                display: inline-block;
+                margin-right: 10px;
+                background-color: #f0f0f0;
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+   
+            .verified {
+            color: #1DA1F2;
+            font-size: 1em;
+            margin-left: 5px;
+        }
+
+      
+
+        .hovering{
+            transition: transform 0.5s ease;
+            
+        }
+        .hovering:hover{
+            color: rgb(49, 31, 94);
+        }
+
+        .banner {
+    position: relative;
+}
+
+.banner-img {
+    width: 100%;
+    height: 300px; 
+    object-fit: cover; 
+   
+    
+}
+
+.profile-pic {
+    position: absolute;
+    bottom: -80px; 
+    left: 20px;
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    border: 3px solid white; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.profile-info {
+    padding: 80px 20px 20px; 
+}
+
+.profile-info h3 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.username {
+    color: #657786; 
+}
+
+.bio, .tech-stack, .email .github {
+    color: #2a3944; 
+    margin: 5px 0; 
+}
+
+.edit-button {
+    margin-left: 10px; 
+}
+
+.btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-outline-primary {
+    border: 1px solid #1DA1F2;
+    color: #1DA1F2;
+    background-color: white;
+}
+
+.btn-outline-primary:hover {
+    background-color: #1DA1F2;
+    color: white; 
+}
+
+.img-fluid {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            max-height: 100%;
+            border-radius: 8px 0 0 8px;
+        }
+       
+
+        .container-profile{
+            margin: auto 10rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: sticky; z-index: 1000; top: 0px;" >
+        <div class="container">
+           
+            <a class="navbar-brand logo" href="#">
+                <img src="{%static 'logo.png' %}" alt="dshowcase logo">
+            </a>
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+           
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <ul class="navbar-nav mx-auto">
+                 
+                    <li class="nav-item">
+                        <form class="d-flex">
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                                <input class="form-control" type="search" placeholder="Search for projects" aria-label="Search" style="width: 400px;">
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" style="font-size: 25px;">
+                        <a class="nav-link" href="/"><i class="bi bi-house"></i></a>
+                    </li>
+                    <li class="nav-item" style="font-size: 25px;">
+                        <a class="nav-link" href="#"><i class="bi bi-bell"></i></a>
+                    </li>
+                    <li class="nav-item" style="font-size: 25px;">
+                        <a class="nav-link" href="#"><i class="bi bi-gear"></i></a>
+                    </li>
+
+                    <li class="nav-item" style="font-size: 25px;">
+                        <a class="nav-link" href="/profile"><i class="bi bi-person-circle"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="container-profile">
+        <div class="banner">
+            <img src="{{ user.cover.url }}" alt="Banner" class="banner-img">
+            <img src="{{ user.pict.url }}" alt="Profile Picture" class="profile-pic">
+        </div>
+        <div class="profile-info">
+            <h3>{{ user.username }}<span class="verified">
+                <i class="bi bi-patch-check-fill"></i>
+            </span>  <button class="btn btn-outline-primary btn-sm edit-button" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
+            <button class="btn btn-outline-primary btn-sm edit-button" data-bs-toggle="modal" data-bs-target="#showcaseProjectModal">Showcase a Project</button></h3>
+            <p class="bio">Bio: {{ user.description}}.</p>
+            <p class="tech-stack">Tech-Stack : {{ user.tech }}</p>
+            <p class="email">Email: {{user.email}}</p>
+            <p class="github">Github: <a href="{{ user.git }}" target="_blank" rel="noopener noreferrer">{{ user.git }}</a></p>
+           
+        </div>
+    </div>
+      
+        
+    
+   
+
+
+
+
+
+
+
+{% if project %}
+     <ul>
+         {% for project in project %}
+
+            <div class="container center">
+                <div class="card mb-3 position-relative">
+                    <div class="row g-0">
+
+                        <div class="col-md-4">
+                            <img src="{{ project.img.url }}" class="img-fluid rounded-start" alt="...">
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    <a href="#" style="text-decoration: none; color: inherit;">{{ project.name }}</a>
+
+                                </h5>
+
+
+                                <p class="card-text">
+                                   {{ project.description }} .
+                                </p>
+
+
+                                <div class="tech-stack">
+                                    <h6>Tech Stacks:</h6>
+                                    <ul>
+                                        <li style="margin: 5px;">JavaScript</li>
+                                        <li style="margin: 5px;">Python</li>
+                                        <li style="margin: 5px;">React</li>
+                                        <li style="margin: 5px;">RUST</li>
+                                    </ul>
+                                </div>
+
+
+
+
+                                <p class="card-text mt-2" style="display: flex; align-items: center;">
+                                    <button class="btn btn-primary btn-sm">
+                                        <i class="bi bi-hand-thumbs-up"></i> Like
+                                    </button>
+                                    <small class="text-body-secondary" style="margin: 5px;">19 Likes</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+   {% endfor %}
+
+</ul>
+
+{% endif %}
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" name="info" enctype="multipart/form-data">
+
+              {% csrf_token %}
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username">
+                </div>
+              <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" id="description" rows="3" placeholder="Enter your description" name="description"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="techStacks" class="form-label">Tech Stacks</label>
+                  <input type="text" class="form-control" id="techStacks" placeholder="Enter your tech stacks" name="tech">
+                </div>
+               <div class="mb-3">
+                  <label for="techStacks" class="form-label">Github page</label>
+                  <input type="text" class="form-control" id="git" placeholder="Enter your Github profile page" name="git">
+                </div>
+                <div class="mb-3">
+                  <label for="profileImage" class="form-label">Profile Image</label>
+                  <input type="file" class="form-control" id="profileImage" name="pict">
+                </div>
+                <div class="mb-3">
+                  <label for="bannerImage" class="form-label">Banner Image</label>
+                  <input type="file" class="form-control" id="bannerImage" name="bg">
+                </div>
+
+              <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="info">Save changes</button>
+        </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="showcaseProjectModal" tabindex="-1" aria-labelledby="showcaseProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="showcaseProjectModalLabel">Showcase a Project</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form method="POST"  enctype="multipart/form-data">
+
+              {% csrf_token %}
+            <div class="mb-3">
+              <label for="projectName" class="form-label">Project Name</label>
+              <input type="text" class="form-control" id="projectName" placeholder="Enter project name" name="name">
+            </div>
+            <div class="mb-3">
+              <label for="projectImage" class="form-label">Project Image</label>
+              <input type="file" class="form-control" id="projectImage" name="img">
+            </div>
+            <div class="mb-3">
+              <label for="projectDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="projectDescription" rows="3" placeholder="Enter project description" name="description"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="githubLink" class="form-label">GitHub Project Link</label>
+              <input type="url" class="form-control" id="githubLink" placeholder="Enter GitHub project link" name="git">
+            </div>
+            <div class="mb-3">
+              <label for="projectTechStacks" class="form-label">Tech Stacks</label>
+              <input type="text" class="form-control" id="projectTechStacks" placeholder="Enter tech stacks" name="tech">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" name="project">Add Project</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+    
+ 
+
+ 
+
+  
+
+
+    
+    
+
+   
+
+    
+
+
+
+
+   
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>

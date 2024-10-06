@@ -1,0 +1,138 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup | DShowcase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{%static 'favicon.ico' %}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .scrollable-checkboxes {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .btn-color{
+          color: white;
+          background-color: rgb(97, 97, 158);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4" style="color: rgb(97, 97, 158);" >Signup</h5>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label" >Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Confirm your password</label>
+                    <input type="password" class="form-control" id="password2" placeholder="Confirm your password" name="password_c" required>
+                </div>
+                <div class="mb-3">
+                    <label for="github" class="form-label">GitHub Profile</label>
+                    <input type="url" class="form-control" id="github" placeholder="Enter your GitHub profile URL" name="git" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="2" placeholder="Tell us about yourself" name="description" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Programming Languages (select up to 5)</label>
+                    <div class="scrollable-checkboxes" id="language-options">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="JavaScript" id="javascript">
+                            <label class="form-check-label" for="javascript">JavaScript</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Python" id="python">
+                            <label class="form-check-label" for="python">Python</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Java" id="java">
+                            <label class="form-check-label" for="java">Java</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="C++" id="cpp">
+                            <label class="form-check-label" for="cpp">C++</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Ruby" id="ruby">
+                            <label class="form-check-label" for="ruby">Ruby</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Go" id="go">
+                            <label class="form-check-label" for="go">Go</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="PHP" id="php">
+                            <label class="form-check-label" for="php">PHP</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Swift" id="swift">
+                            <label class="form-check-label" for="swift">Swift</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Kotlin" id="kotlin">
+                            <label class="form-check-label" for="kotlin">Kotlin</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Rust" id="rust">
+                            <label class="form-check-label" for="rust">Rust</label>
+                        </div>
+                      
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-color w-100">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const checkboxes = document.querySelectorAll('#language-options .form-check-input');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const checkedCount = document.querySelectorAll('#language-options .form-check-input:checked').length;
+            if (checkedCount >= 5) {
+                checkboxes.forEach(cb => {
+                    if (!cb.checked) {
+                        cb.disabled = true;
+                    }
+                });
+            } else {
+                checkboxes.forEach(cb => cb.disabled = false);
+            }
+        });
+    });
+</script>
+</body>
+</html>
