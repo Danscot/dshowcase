@@ -1,5 +1,4 @@
 {% load static %}
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -177,7 +176,7 @@
         <div class="container">
            
             <a class="navbar-brand logo" href="/">
-                <img src="{%static 'logo.png' %}" alt="dshowcase logo">
+               <img src="{%static 'logo.png' %}" alt="dshowcase logo">
             </a>
 
             
@@ -199,6 +198,7 @@
                     </li>
                 </ul>
 
+             
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item" style="font-size: 25px;">
                         <a class="nav-link" href="/"><i class="bi bi-house"></i></a>
@@ -225,43 +225,29 @@
 
     
     <div class="container-profile">
+
         <div class="banner">
             <img src="{{ user.cover.url }}" alt="Banner" class="banner-img">
             <img src="{{ user.pict.url }}" alt="Profile Picture" class="profile-pic">
         </div>
         <div class="profile-info">
-            <h3>{{ user.username }}<span class="verified">
-                <i class="bi bi-patch-check-fill"></i>
-            </span>  <button class="btn btn-outline-primary btn-sm edit-button" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
-            <button class="btn btn-outline-primary btn-sm edit-button" data-bs-toggle="modal" data-bs-target="#showcaseProjectModal">Showcase a Project</button></h3>
+            <h3>{{ user.username }}<span class="verified"><i class="bi bi-patch-check-fill"></i> </h3>
             <p class="bio">Bio: {{ user.description}}.</p>
             <p class="tech-stack">Tech-Stack : {{ user.tech }}</p>
             <p class="email">Email: {{user.email}}</p>
             <p class="github">Github: <a href="{{ user.git }}" target="_blank" rel="noopener noreferrer">{{ user.git }}</a></p>
-           
         </div>
     </div>
       
-        
-    
-   
-
-
-
-
-
-
-
 {% if project %}
-     <ul>
-         {% for project in project %}
-
+    <ul>
+        {% for project in project %}
             <div class="container center">
                 <div class="card mb-3 position-relative">
                     <div class="row g-0">
 
                         <div class="col-md-4">
-                            <img src="{{ project.img.url }}" class="img-fluid rounded-start" alt="...">
+                            <img src="{{ project.img.url }}" class="img-fluid rounded-start" alt="{{ project.name }}">
                         </div>
 
                         <div class="col-md-8">
@@ -269,162 +255,62 @@
 
                                 <h5 class="card-title">
                                     <a href="{{ project.git }}" style="text-decoration: none; color: inherit;" target="_blank">{{ project.name }}</a>
-
                                 </h5>
 
-
                                 <p class="card-text">
-                                   {{ project.description }} .
+                                    {{ project.description }}.
                                 </p>
-
 
                                 <div class="tech-stack">
                                     <h6>Tech Stacks:</h6>
                                     <ul>
-                                        <li style="margin: 5px;">JavaScript</li>
-                                        <li style="margin: 5px;">Python</li>
-                                        <li style="margin: 5px;">React</li>
-                                        <li style="margin: 5px;">RUST</li>
+                                        <li style="margin: 5px;">{{ project.tech }}</li>
                                     </ul>
                                 </div>
 
-
-
-
                                 <p class="card-text mt-2" style="display: flex; align-items: center;">
-                                    <button class="btn btn-primary btn-sm">
+                                    <button class="btn btn-primary btn-sm" onclick="likeProject({{ project.id }})">
                                         <i class="bi bi-hand-thumbs-up"></i> Like
                                     </button>
-                                    <small class="text-body-secondary" style="margin: 5px;">19 Likes</small>
+                                    <small class="text-body-secondary" style="margin: 5px;">
+                                        <span id="like-count-{{ project.id }}">{{ project.likes }}</span>
+                                    </small>
+                                    <span id="like-message-{{ project.id }}" style="color: red; margin-left: 10px;"></span> <!-- For error messages -->
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-   {% endfor %}
-
-</ul>
-
+        {% endfor %}
+    </ul>
 {% endif %}
 
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form method="POST" name="info" enctype="multipart/form-data">
-
-              {% csrf_token %}
-                <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username">
-                </div>
-              <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" placeholder="Enter your Email" name="email">
-                </div>
-                <div class="mb-3">
-                  <label for="description" class="form-label">Description</label>
-                  <textarea class="form-control" id="description" rows="3" placeholder="Enter your description" name="description"></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="techStacks" class="form-label">Tech Stacks</label>
-                  <input type="text" class="form-control" id="techStacks" placeholder="Enter your tech stacks" name="tech">
-                </div>
-               <div class="mb-3">
-                  <label for="techStacks" class="form-label">Github page</label>
-                  <input type="text" class="form-control" id="git" placeholder="Enter your Github profile page" name="git">
-                </div>
-                <div class="mb-3">
-                  <label for="profileImage" class="form-label">Profile Image</label>
-                  <input type="file" class="form-control" id="profileImage" name="pict">
-                </div>
-                <div class="mb-3">
-                  <label for="bannerImage" class="form-label">Banner Image</label>
-                  <input type="file" class="form-control" id="bannerImage" name="bg">
-                </div>
-
-              <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" name="info">Save changes</button>
-        </div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="showcaseProjectModal" tabindex="-1" aria-labelledby="showcaseProjectModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="showcaseProjectModalLabel">Showcase a Project</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-          <form method="POST"  enctype="multipart/form-data">
-
-              {% csrf_token %}
-            <div class="mb-3">
-              <label for="projectName" class="form-label">Project Name</label>
-              <input type="text" class="form-control" id="projectName" placeholder="Enter project name" name="name">
-            </div>
-            <div class="mb-3">
-              <label for="projectImage" class="form-label">Project Image</label>
-              <input type="file" class="form-control" id="projectImage" name="img">
-            </div>
-            <div class="mb-3">
-              <label for="projectDescription" class="form-label">Description</label>
-              <textarea class="form-control" id="projectDescription" rows="3" placeholder="Enter project description" name="description"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="githubLink" class="form-label">GitHub Project Link</label>
-              <input type="url" class="form-control" id="githubLink" placeholder="Enter GitHub project link" name="git">
-            </div>
-            <div class="mb-3">
-              <label for="projectTechStacks" class="form-label">Tech Stacks</label>
-              <input type="text" class="form-control" id="projectTechStacks" placeholder="Enter tech stacks" name="tech">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" name="project">Add Project</button>
-            </div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-    
- 
-
- 
-
-  
-
-
-    
-    
-
-   
-
-    
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function likeProject(projectId) {
+    $.ajax({
+        url: "/like/" + projectId + "/",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function(response) {
+            // Update the like count in the DOM
+            $('#like-count-' + projectId).text(response.likes);
+            $('#like-message-' + projectId).text(''); // Clear any error message
+        },
+        error: function(xhr) {
+            // Show an error message if the user has already liked the project
+            if (xhr.status === 400) {
+                $('#like-message-' + projectId).text('You have already liked this project');
+            } else {
+                console.error('Error:', xhr.responseText);
+            }
+        }
+    });
+}
+</script>
 
 
 

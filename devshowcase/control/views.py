@@ -25,19 +25,28 @@ def signin(request):
 
         git = request.POST['git']
 
+
         if password == password1:
 
-            user = CustomUser.objects.create_user(username=username, email=email, password=password)
+            if CustomUser.objects.filter(username=username).exists():
 
-            # Add additional fields (such as git and description) manually
+                messages.error(request, "Username already exists. Please choose a different one.")
 
-            user.git = git
+                return render(request, "signup.html")
 
-            user.description = description
+            else:
 
-            user.save()
+                user = CustomUser.objects.create_user(username=username, email=email, password=password)
 
-            return redirect('login')
+                # Add additional fields (such as git and description) manually
+
+                user.git = git
+
+                user.description = description
+
+                user.save()
+
+                return redirect('login')
 
     return render(request, "signup.html")
 
@@ -71,7 +80,7 @@ def log_in(request):
 
             messages.error(request, error)
 
-            return redirect("signin")
+            return redirect("login")
 
     return render(request, "login.html")
 
@@ -80,9 +89,9 @@ def logout(request):
 
     auth.logout(request)
 
-    return redirect('sign')
+    return redirect('login')
 
-@login_required
+@login_required(login_url='login')
 def profile(request):
 
     user = request.user  # Get the currently logged-in user

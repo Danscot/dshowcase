@@ -1,10 +1,10 @@
-from django.contrib.auth.decorators import login_required
+
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.contrib.auth import get_user_model
 
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Count
 
 from control.models import Project
 
@@ -15,31 +15,31 @@ from control.models import Like
 
 
 def main(request):
-
     # Get the custom user model
     user = get_user_model()
 
     query = request.GET.get('search')
 
-    c_user = request.user
-
     if query:
-            # Filter users by username if search query exists
-            users = user.objects.filter(Q(username__icontains=query))
+        # Filter users by username if search query exists
+        users = user.objects.filter(Q(username__icontains=query)).annotate(
+            total_projects=Count('project'),
+            total_likes=Sum('project__likes')
+        )
     else:
-            # If no search query, display all users
-            users = user.objects.all()
+        # If no search query, display all users
+        users = user.objects.all().annotate(
+            total_projects=Count('project'),
+            total_likes=Sum('project__likes')
+        )
 
     context = {
-
         'users': users,
     }
 
     return render(request, 'index.html', context)
 
 def profile(request, username):
-
-    c_user = request.user
 
     users = get_user_model()
 
@@ -57,7 +57,7 @@ def profile(request, username):
 
 
 
-    return render(request, 'profile.html', context)
+    return render(request, 'p.html', context)
 
 
 def like_project(request, project_id):

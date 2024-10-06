@@ -108,7 +108,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: sticky; z-index: 1000; top: 0px;" >
         <div class="container">
            
-            <a class="navbar-brand logo" href="#">
+            <a class="navbar-brand logo" href="/">
                 <img src="{%static 'logo.png' %}" alt="dshowcase logo">
             </a>
 
@@ -137,12 +137,17 @@
                     <li class="nav-item" style="font-size: 25px;">
                         <a class="nav-link" href="/"><i class="bi bi-house"></i></a>
                     </li>
-                    <li class="nav-item" style="font-size: 25px;">
-                        <a class="nav-link" href="#"><i class="bi bi-bell"></i></a>
-                    </li>
-                    <li class="nav-item" style="font-size: 25px;">
-                        <a class="nav-link" href="#"><i class="bi bi-gear"></i></a>
-                    </li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item" style="font-size: 25px;">
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="bi bi-door-open-fill"></i></a>
+                        </li>
+                    {% else %}
+
+                        <li class="nav-item" style="font-size: 25px;">
+                            <a class="nav-link" href="{% url 'signin' %}"><i class="bi bi-door-open-fill"></i></a>
+                        </li>
+                    {% endif %}
                    
                     <li class="nav-item" style="font-size: 25px;">
                         <a class="nav-link" href="/profile"><i class="bi bi-person-circle"></i></a>
@@ -183,7 +188,7 @@
                                 
                             </ul>
                         </div>
-                        <p class="card-text"><small class="text-body-secondary">Number of Projects: 5, </small> <small class="text-body-secondary">Points: 5</small></p>
+                        <p class="card-text"><small class="text-body-secondary">Number of project : {{ user.total_projects }}, </small> <small class="text-body-secondary">number of likes : {{ user.total_likes|default:"0" }}</small></p>
                     </div>
                 </div>
             </div>

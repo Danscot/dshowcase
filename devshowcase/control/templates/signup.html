@@ -30,9 +30,48 @@
           color: white;
           background-color: rgb(97, 97, 158);
         }
+
+
+.messages li {
+
+    list-style: none;
+
+    color: white;
+
+    position: absolute;
+
+    left: 440px;
+
+    top: 10px;
+
+    font-size: 20px;
+
+    border: solid 1px indigo;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: red;
+
+    padding: 5px;
+
+}
+
     </style>
 </head>
 <body>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="error">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 <div class="container">
     <div class="card">
@@ -64,52 +103,7 @@
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" rows="2" placeholder="Tell us about yourself" name="description" required></textarea>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Programming Languages (select up to 5)</label>
-                    <div class="scrollable-checkboxes" id="language-options">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="JavaScript" id="javascript">
-                            <label class="form-check-label" for="javascript">JavaScript</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Python" id="python">
-                            <label class="form-check-label" for="python">Python</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Java" id="java">
-                            <label class="form-check-label" for="java">Java</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="C++" id="cpp">
-                            <label class="form-check-label" for="cpp">C++</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Ruby" id="ruby">
-                            <label class="form-check-label" for="ruby">Ruby</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Go" id="go">
-                            <label class="form-check-label" for="go">Go</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="PHP" id="php">
-                            <label class="form-check-label" for="php">PHP</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Swift" id="swift">
-                            <label class="form-check-label" for="swift">Swift</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Kotlin" id="kotlin">
-                            <label class="form-check-label" for="kotlin">Kotlin</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Rust" id="rust">
-                            <label class="form-check-label" for="rust">Rust</label>
-                        </div>
-                      
-                    </div>
-                </div>
+
                 <button type="submit" class="btn btn-color w-100">Sign Up</button>
             </form>
         </div>
